@@ -94,6 +94,7 @@ class MobileEsp {
   public $deviceBBBoldTouch = 'blackberry 99'; // Bold 99x0 (touchscreen)
   public $deviceBBTour = 'blackberry96'; // Tour
   public $deviceBBCurve = 'blackberry89'; // Curve2
+  public $deviceBBCurveTouch = 'blackberry 938'; //Curve Touch
   public $deviceBBTorch = 'blackberry 98'; // Torch
   public $deviceBBPlaybook = 'playbook'; // PlayBook tablet
 
@@ -553,8 +554,9 @@ class MobileEsp {
   }
 
   /**
-   * Detects if the current browser is a BlackBerry Touch phone device, such as
-   * the Storm, Torch, and Bold Touch. Excludes the Playbook.
+   * Detects if the current browser is a BlackBerry Touch phone device with a
+   * large screen, such as the Storm, Torch, and Bold Touch. Excludes the
+   * Playbook.
    *
    * @return boolean
    */
@@ -562,7 +564,8 @@ class MobileEsp {
     if (
       stripos($this->useragent, $this->deviceBBStorm) > -1 ||
       stripos($this->useragent, $this->deviceBBTorch) > -1 ||
-      stripos($this->useragent, $this->deviceBBBoldTouch) > -1
+      stripos($this->useragent, $this->deviceBBBoldTouch) > -1 ||
+      stripos($this->useragent, $this->deviceBBCurveTouch) > -1
     ) {
       return true;
     }
