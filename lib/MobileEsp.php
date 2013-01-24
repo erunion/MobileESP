@@ -80,6 +80,7 @@ class MobileEsp {
   public $deviceS80 = 'series80';
   public $deviceS90 = 'series90';
 
+  public $deviceWinPhone8 = 'windows phone 8';
   public $deviceWinPhone7 = 'windows phone os 7';
   public $deviceWinMob = 'windows ce';
   public $deviceWindows = 'windows';
@@ -459,13 +460,27 @@ class MobileEsp {
   }
 
   /**
+   * Detects if the current browser is a Windows Phone 8 device.
+   *
+   * @return boolean
+   */
+  public function DetectWindowsPhone8() {
+    if (stripos($this->useragent, $this->deviceWinPhone8) > -1) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Detects if the current browser is a Windows Mobile device. Excludes
-   * Windows Phone 7 devices and just focuses on Windows Mobile 6.xx or earlier.
+   * Windows Phone 7/8 devices and just focuses on Windows Mobile 6.xx or
+   * earlier.
    *
    * @return boolean
    */
   public function DetectWindowsMobile() {
-    if ($this->DetectWindowsPhone7()) {
+    if ($this->DetectWindowsPhone7() || $this->DetectWindowsPhone8()) {
       return false;
     }
 
@@ -700,6 +715,7 @@ class MobileEsp {
       $this->DetectSymbianOS() ||
       $this->DetectWindowsMobile() ||
       $this->DetectWindowsPhone7() ||
+      $this->DetectWindowsPhone8() ||
       $this->DetectBlackBerry() ||
       $this->DetectPalmWebOS() ||
       $this->DetectPalmOS() ||
@@ -1087,7 +1103,7 @@ class MobileEsp {
   /**
    * The quick way to detect for a tier of devices. This method detects for
    * devices which can display iPhone-optimized web content. Includes iPhone,
-   * iPod Touch, Android, Windows Phone 7, WebOS, etc.
+   * iPod Touch, Android, Windows Phone 7/8, WebOS, etc.
    *
    * @return boolean
    */
@@ -1106,7 +1122,7 @@ class MobileEsp {
       return true;
     }
 
-    if ($this->DetectWindowsPhone7()) {
+    if ($this->DetectWindowsPhone7() || $this->DetectWindowsPhone8()) {
       return true;
     }
 
